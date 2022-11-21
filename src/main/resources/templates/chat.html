@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Chat</title>
+    </head>
+
+    <body>
+        <form th:action="@{/chat}"
+            action="#"
+            method="POST"
+            th:object='${chatForm}'>
+            <label for="messageText">Message Text:</label>
+            <input th:field="*{text}"
+                id="messageText"
+                type="text">
+            <label for="messageType">Message Type: </label>
+            <select th:field="*{mode}"
+                id="messageType">
+                <option th:each="type : ${messageTypes}"
+                    th:value="${type}"
+                    th:text="${type}"></option>
+            </select>
+            <input id="chat-submit-btn"
+                type="submit">
+        </form>
+        <div th:each="chatMessage : ${chatMessages}"
+            th:object='${chatMessage}'
+            th:id="${#ids.seq('chatMessage')}">
+            <span class="chatMessageUsername"
+                th:text="*{username}">Username</span>: <span class="chatMessageText"
+                th:text="*{messageText}">Hello, world!</span>
+
+        </div>
+        <form th:action="@{/perform_logout}"
+            action="#"
+            method="POST">
+            <button id="logout-btn"
+                type="submit">Logout</button>
+        </form>
+    </body>
+
+</html>
